@@ -1,11 +1,18 @@
 public class FamilyTree {
 	
+	private int uniqueIdentifier = 1;
+	
 	private class FamilyTreeNode {
+		private int identifier;
 		private String name;
 		private FamilyTreeNode partner;
 		private FamilyTreeNode firstChild;
 		private FamilyTreeNode nextSibling;
-
+		
+		public FamilyTreeNode() {
+			this.identifier = uniqueIdentifier;
+			uniqueIdentifier++;
+		}
 	}
 	
 	public class UniqueNameConstraintException extends Exception {}
@@ -13,11 +20,11 @@ public class FamilyTree {
 	private FamilyTreeNode ancestor;
 	
 	public FamilyTree(String ancestorName, String partnerName) {
-		FamilyTreeNode partner = new FamilyTreeNode();
-		partner.name = partnerName;
-
 		this.ancestor = new FamilyTreeNode();
 		this.ancestor.name = ancestorName;
+		
+		FamilyTreeNode partner = new FamilyTreeNode();
+		partner.name = partnerName;
 		
 		partner.partner = this.ancestor;
 		this.ancestor.partner = partner;
@@ -60,13 +67,13 @@ public class FamilyTree {
 	private String getFamilyDetails(FamilyTreeNode familyMemberNode) {
 		String familyDetails = new String();
 		
-		familyDetails += familyMemberNode.name + " partner " + familyMemberNode.partner.name + "\n";
+		familyDetails += familyMemberNode.name + "(identifier " + familyMemberNode.identifier + ") partner " + familyMemberNode.partner.name + "(identifier " + familyMemberNode.partner.identifier + ")\n";
 		FamilyTreeNode familyMember = familyMemberNode.firstChild;
 		if (familyMember == null) {
 			familyDetails += " has no children\n";
 		} else {
 			while (familyMember != null) {
-				familyDetails += " " + familyMember.name + "\n";
+				familyDetails += " " + familyMember.name + "(identifier " + familyMember.identifier + ")\n";
 				familyMember = familyMember.nextSibling;
 			}
 		}
