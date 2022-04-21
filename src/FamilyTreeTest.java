@@ -38,6 +38,10 @@ public class FamilyTreeTest {
 				case 2:
 					System.out.println(familyTree);
 					break;
+				case 3:
+					//TODO
+					System.out.println("Adding partner");
+					break;
 				default:
 					System.out.println("Please enter a valid option from the menu");
 			}
