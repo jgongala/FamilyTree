@@ -1,6 +1,9 @@
 public class FamilyTree {
 	
 	private int uniqueIdentifier = 1;
+	private FamilyTreeNode ancestor;
+	
+	//TODO adding all members for list easy search
 	
 	private class FamilyTreeNode {
 		private int identifier;
@@ -16,18 +19,27 @@ public class FamilyTree {
 	}
 	
 	public class UniqueNameConstraintException extends Exception {}
+	public class FamilyMemberNotFoundException extends Exception {}
+
 	
-	private FamilyTreeNode ancestor;
 	
-	public FamilyTree(String ancestorName, String partnerName) {
+	
+	public FamilyTree(String ancestorName) {
 		this.ancestor = new FamilyTreeNode();
 		this.ancestor.name = ancestorName;
+	}
+	
+	public void addPartner (String partnerName, int familyMemberId) throws FamilyMemberNotFoundException {
+		FamilyTreeNode familyMember = findFamilyMember(familyMemberId);
 		
-		FamilyTreeNode partner = new FamilyTreeNode();
-		partner.name = partnerName;
-		
-		partner.partner = this.ancestor;
-		this.ancestor.partner = partner;
+		if (familyMember == null) {
+			throw new FamilyMemberNotFoundException();
+		} else {
+			FamilyTreeNode partner = new FamilyTreeNode();
+			partner.name = partnerName;
+			partner.partner = familyMember;
+			familyMember.partner = partner;
+		}	
 	}
 	
 	public void addChild (String childName) throws UniqueNameConstraintException {
@@ -58,20 +70,12 @@ public class FamilyTree {
 	public String toString() {
 		String familyDetails = new String();
 		
-		familyDetails += getFamilyDetails(this.ancestor);
-		familyDetails += getFamilyDetails(this.ancestor.partner);
-		
-		return familyDetails;
-	}
-	
-	private String getFamilyDetails(FamilyTreeNode familyMemberNode) {
-		String familyDetails = new String();
-		
-		familyDetails += familyMemberNode.name + "(identifier " + familyMemberNode.identifier + ") partner " + familyMemberNode.partner.name + "(identifier " + familyMemberNode.partner.identifier + ")\n";
-		FamilyTreeNode familyMember = familyMemberNode.firstChild;
+		familyDetails += this.ancestor.name + "(identifier " + this.ancestor.identifier + ") partner " + this.ancestor.partner.name + "(identifier " + this.ancestor.partner.identifier + ")\n";
+		FamilyTreeNode familyMember = this.ancestor.firstChild;
 		if (familyMember == null) {
 			familyDetails += " has no children\n";
 		} else {
+			// TODO
 			while (familyMember != null) {
 				familyDetails += " " + familyMember.name + "(identifier " + familyMember.identifier + ")\n";
 				familyMember = familyMember.nextSibling;
@@ -80,4 +84,13 @@ public class FamilyTree {
 		
 		return familyDetails;
 	}
+
+	
+	public FamilyTreeNode findFamilyMember (int id) throws FamilyMemberNotFoundException {
+		
+		//TODO
+		throw new FamilyMemberNotFoundException();
+
+	}
+	
 }

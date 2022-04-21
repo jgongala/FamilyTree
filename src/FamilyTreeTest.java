@@ -2,8 +2,7 @@ public class FamilyTreeTest {
 	public static void main (String[] args) {
 		
 		String name = Input.getString("Enter ancestor name: ");
-		String partnerName = Input.getString("Enter partner's name: ");
-		FamilyTree familyTree = new FamilyTree(name, partnerName);
+		FamilyTree familyTree = new FamilyTree(name);
 		
 		Integer option;
 		
@@ -13,6 +12,8 @@ public class FamilyTreeTest {
 					System.out.println("0: quit");
 					System.out.println("1: add child");
 					System.out.println("2: display family tree");
+					System.out.println("3: add partner");
+
 					option = Input.getInteger("Enter your option: ");
 					break;
 				} catch (Exception exception){
@@ -36,7 +37,22 @@ public class FamilyTreeTest {
 					}
 					break;
 				case 2:
-					System.out.println(familyTree);
+					System.out.println("1: display whole family tree");
+					System.out.println("2: display specific family member");
+
+					option = Input.getInteger("Enter your option: ");
+					switch (option) {
+						case 1:
+							System.out.println(familyTree);
+							break;
+						case 2: 
+							// TODO
+							System.out.println("specific member");
+							break;
+						default:
+							System.out.println("Please enter a valid option from the menu");
+						}
+					
 					break;
 				case 3:
 					//TODO
